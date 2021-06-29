@@ -164,7 +164,7 @@ class Giveaways(commands.Cog):
 
     @commands.Cog.listener()
     async def on_component(self, ctx: ComponentContext):
-        if os.path.exists(f"giveaway_users/{ctx.custom_id}.txt"):
+        try:
             with open(f"giveaway_users/{ctx.custom_id}.txt", "r") as file:
                 for line in file:
                     stripped_line = line.strip()
@@ -178,8 +178,8 @@ class Giveaways(commands.Cog):
             
             else:
                 await ctx.author.send("You have already entered this giveaway!")
-        else:
+        except:
             await ctx.author.send("This giveaway has ended!")
-            
+
 def setup(bot):
     bot.add_cog(Giveaways(bot))
