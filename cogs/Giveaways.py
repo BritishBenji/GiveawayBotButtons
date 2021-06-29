@@ -170,11 +170,11 @@ class Giveaways(commands.Cog):
                 giveaway_users.append(stripped_line)
             
         if str(ctx.author.id) not in giveaway_users:
-            await ctx.send("You have been entered into the giveaway!")
+            await ctx.author.send("You have been entered into the giveaway!")
             a = ctx.author.id
             with open(f"giveaway_users/{ctx.custom_id}.txt", "a") as file:
                 file.write(f"{str(a)}\n")
         else:
-            await ctx.send("You have already entered this giveaway!")
+            await ctx.author.send("You have already entered this giveaway!")
 def setup(bot):
     bot.add_cog(Giveaways(bot))
