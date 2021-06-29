@@ -68,6 +68,10 @@ class GiveawayTask(commands.Cog):
                     json_data = json.load(file)
 
                     del json_data[giveaway]
+                if os.path.exists(f"giveaway_users/{data['button_id']}.txt"):
+                    os.remove(f"giveaway_users/{data['button_id']}.txt")
+                else:
+                    pass
 
                 with open("cogs/giveaways.json", "w") as file:
                     json.dump(json_data, file, indent=4)

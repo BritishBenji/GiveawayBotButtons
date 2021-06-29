@@ -164,17 +164,22 @@ class Giveaways(commands.Cog):
 
     @commands.Cog.listener()
     async def on_component(self, ctx: ComponentContext):
-        with open(f"giveaway_users/{ctx.custom_id}.txt", "r") as file:
-            for line in file:
-                stripped_line = line.strip()
-                giveaway_users.append(stripped_line)
+        if os.path.exists(f"giveaway_users/{ctx.custom_id}.txt"):
+            with open(f"giveaway_users/{ctx.custom_id}.txt", "r") as file:
+                for line in file:
+                    stripped_line = line.strip()
+                    giveaway_users.append(stripped_line)
             
-        if str(ctx.author.id) not in giveaway_users:
-            await ctx.author.send("You have been entered into the giveaway!")
-            a = ctx.author.id
-            with open(f"giveaway_users/{ctx.custom_id}.txt", "a") as file:
-                file.write(f"{str(a)}\n")
+            if str(ctx.author.id) not in giveaway_users:
+                await ctx.author.send("You have been entered into the giveaway!")
+                a = ctx.author.id
+                with open(f"giveaway_users/{ctx.custom_id}.txt", "a") as file:
+                    file.write(f"{str(a)}\n")
+            
+            else:
+                await ctx.author.send("You have already entered this giveaway!")
         else:
-            await ctx.author.send("You have already entered this giveaway!")
+            await ctx.author.send("This giveaway has ended!")
+            
 def setup(bot):
     bot.add_cog(Giveaways(bot))
