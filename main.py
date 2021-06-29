@@ -37,9 +37,6 @@ async def on_ready():
         async for guild in bot.fetch_guilds(limit=150):
             guilds.append(guild.name)
     print(guilds)
-    await bot.change_presence(
-        activity=discord.Streaming(name="In Development!", url="https://www.twitch.tv/BritishBenji"))
-    user = bot.user
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
