@@ -1,4 +1,7 @@
 # GiveawayBotButtons
+
+[![wakatime](https://wakatime.com/badge/github/BritishBenji/GiveawayBotButtons.svg)](https://wakatime.com/badge/github/BritishBenji/GiveawayBotButtons)
+
 A Discord Giveaway Bot that uses Discord's component buttons to join the giveaway
 
 Currently Unfinished
