@@ -2,12 +2,14 @@ import asyncio
 import datetime
 import json
 import os
-import time
 import random
+import time
 
 import discord
 import discord_slash
+from discord import Member
 from discord.ext import commands, tasks
+from discord.ext.commands import MissingPermissions, has_permissions
 from discord_slash import SlashCommand, SlashContext
 from discord_slash.context import ComponentContext
 from discord_slash.model import ButtonStyle
@@ -46,7 +48,9 @@ class Giveaways(commands.Cog):
     bot = commands.Bot(command_prefix=get_prefix, description="A bot made to describe the events in your server",
                    case_insensitive=True)
     slash = SlashCommand(bot, sync_commands=True, sync_on_cog_reload=True)
+
     @bot.command(name="Giveaway", description="Allows you to make a giveaway")
+    @has_permissions(ban_members=True)
     async def Giveaways(self, ctx):
         """
         Use this commands to create a giveaway
