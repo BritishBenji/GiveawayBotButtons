@@ -123,7 +123,7 @@ class Giveaways(commands.Cog):
             color=self.color,
             description=f'» **{winners}** {"winner" if winners == 1 else "winners"}\n'
                         f'» Hosted by {ctx.author.mention}\n\n'
-                        f'» **Click the button and it probably won\t do anything!**\n'
+                        f'» **Click the button to join the giveaway!**\n'
         )\
             .set_footer(icon_url=self.bot.user.avatar_url, text="Ends at")\
             .set_thumbnail(url=self.bot.user.avatar_url)
@@ -132,8 +132,8 @@ class Giveaways(commands.Cog):
         self.button_ID = str(random.randint(0,1000))
         buttons = [
             manage_components.create_button(
-                style=ButtonStyle.green,
-                label="Join Giveaway!",
+                style=ButtonStyle.blue,
+                label="Join Giveaway! 🎉",
                 custom_id=self.button_ID
             ),
           ]
@@ -166,11 +166,11 @@ class Giveaways(commands.Cog):
                 giveaway_users.append(stripped_line)
             
         if str(ctx.author.id) not in giveaway_users:
-            await ctx.author.send("You have been entered into the giveaway!")
+            await ctx.send("You have been entered into the giveaway!")
             a = ctx.author.id
             with open(f"giveaway_users/{ctx.custom_id}.txt", "a") as file:
                 file.write(f"{str(a)}\n")
         else:
-            await ctx.author.send("You have already entered this giveaway!")
+            await ctx.send("You have already entered this giveaway!")
 def setup(bot):
     bot.add_cog(Giveaways(bot))
