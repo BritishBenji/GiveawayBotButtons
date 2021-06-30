@@ -179,7 +179,8 @@ class Giveaways(commands.Cog):
             else:
                 await ctx.author.send("You have already entered this giveaway!")
         except:
-            await ctx.author.send("This giveaway has ended!")
+            if len(str(ctx.custom_id)) <= 4:
+                await ctx.author.send("This giveaway has ended!")
 
 def setup(bot):
     bot.add_cog(Giveaways(bot))
