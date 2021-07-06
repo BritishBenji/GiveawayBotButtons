@@ -62,7 +62,7 @@ class GiveawayTask(commands.Cog):
                 result_embed.set_footer(icon_url=self.bot.user.avatar_url, text="Giveaway Ended !")
                 result_embed.set_thumbnail(url=self.bot.user.avatar_url)
                 
-                await giveaway_message.edit(embed=result_embed)
+                await giveaway_message.edit(embed=result_embed, components=[])
 
                 with open("cogs/giveaways.json", "r") as file:
                     json_data = json.load(file)
