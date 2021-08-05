@@ -18,17 +18,18 @@ from main import get_prefix
 
 giveaway_users = []
 
+
 def convert(date):
     pos = ["s", "m", "h", "d"]
-    time_dic = {"s": 1, "m": 60, "h": 3600, "d": 3600 *24}
-    i = {"s": "Secondes", "m": "Minutes", "h": "Heures", "d": "Jours"}
+    time_dic = {"s": 1, "m": 60, "h": 3600, "d": 3600 * 24}
+    i = {"s": "Seconds", "m": "Minutes", "h": "Hours", "d": "Days"}
     unit = date[-1]
     if unit not in pos:
         return -1
     try:
         val = int(date[:-1])
 
-    except:
+    except ValueError:
         return -2
 
     if val == 1:
@@ -36,17 +37,19 @@ def convert(date):
     else:
         return val * time_dic[unit], i[unit]
 
+
 class Giveaways(commands.Cog):
     """
     This cog gives you control over the giveaways
     """
+
     def __init__(self, bot):
         self.bot = bot
         self.config = json.load(open('./config.json', 'r'))
         self.color = discord.Colour.blurple()
 
     bot = commands.Bot(command_prefix=get_prefix, description="A bot made to describe the events in your server",
-                   case_insensitive=True)
+                       case_insensitive=True)
     slash = SlashCommand(bot, sync_commands=True, sync_on_cog_reload=True)
 
     @bot.command(name="Giveaway", description="Allows you to make a giveaway")
@@ -60,7 +63,7 @@ class Giveaways(commands.Cog):
             title="🎉 New Giveaway ! 🎉",
             description="Please answer the following questions to finalize the creation of the Giveaway",
             color=self.color)
-                       .set_footer(icon_url=self.bot.user.avatar_url, text=self.bot.user.name))
+                              .set_footer(icon_url=self.bot.user.avatar_url, text=self.bot.user.name))
 
         questions = [
             "What will the giveaway prize be?",
@@ -71,6 +74,7 @@ class Giveaways(commands.Cog):
 
         def check(message):
             return message.author == ctx.author and message.channel == ctx.channel
+
         index = 1
         answers = []
         question_message = None
@@ -107,7 +111,7 @@ class Giveaways(commands.Cog):
         try:
             winners = abs(int(answers[3]))
             if winners == 0:
-                await ctx.send("You did not enter an postive number.")
+                await ctx.send("You did not enter an positive number.")
                 return
         except ValueError:
             await ctx.send("You did not enter an integer.")
@@ -128,19 +132,19 @@ class Giveaways(commands.Cog):
             description=f'» **{winners}** {"winner" if winners == 1 else "winners"}\n'
                         f'» Hosted by {ctx.author.mention}\n\n'
                         f'» **Click the button to join the giveaway!**\n'
-        )\
-            .set_footer(icon_url=self.bot.user.avatar_url, text="Ends at")\
+        ) \
+            .set_footer(icon_url=self.bot.user.avatar_url, text="Ends at") \
             .set_thumbnail(url=self.bot.user.avatar_url)
 
         giveaway_embed.timestamp = datetime.datetime.utcnow() + datetime.timedelta(seconds=converted_time[0])
-        self.button_ID = str(random.randint(0,1000))
+        self.button_ID = str(random.randint(0, 1000))
         buttons = [
             manage_components.create_button(
                 style=ButtonStyle.blue,
                 label="Join Giveaway! 🎉",
                 custom_id=self.button_ID
             ),
-          ]
+        ]
         action_row = manage_components.create_actionrow(*buttons)
         giveaway_message = await channel.send(embed=giveaway_embed, components=[action_row])
         now = int(time.time())
@@ -169,18 +173,19 @@ class Giveaways(commands.Cog):
                 for line in file:
                     stripped_line = line.strip()
                     giveaway_users.append(stripped_line)
-            
+
             if str(ctx.author.id) not in giveaway_users:
                 await ctx.send("You have been entered into the giveaway!", hidden=True)
                 a = ctx.author.id
                 with open(f"giveaway_users/{ctx.custom_id}.txt", "a") as file:
                     file.write(f"{str(a)}\n")
-            
+
             else:
                 await ctx.send("You have already entered this giveaway!", hidden=True)
-        except:
+        except IOError:
             if len(str(ctx.custom_id)) <= 4:
                 await ctx.send("This giveaway has ended!", hidden=True)
+
 
 def setup(bot):
     bot.add_cog(Giveaways(bot))

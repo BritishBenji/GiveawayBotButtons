@@ -16,6 +16,7 @@ with open('./config.json', 'r') as cjson:
 
 guilds = []
 
+
 def get_prefix(client, message):
     # sets the prefixes, you can keep it as an array of only 1 item if you need only one prefix
     prefixes = [config["prefix"]]
@@ -26,9 +27,12 @@ def get_prefix(client, message):
 
     return commands.when_mentioned_or(*prefixes)(client, message)
 
-bot = commands.Bot(command_prefix=get_prefix, description="A bot made to describe the events in your server",
+
+bot = commands.Bot(command_prefix=get_prefix, description="A simple giveaway bot",
                    case_insensitive=True)
 slash = SlashCommand(bot, sync_commands=True, sync_on_cog_reload=True)
+
+
 @bot.event
 # connects to discord
 async def on_ready():
@@ -37,6 +41,7 @@ async def on_ready():
         async for guild in bot.fetch_guilds(limit=150):
             guilds.append(guild.name)
     print(guilds)
+
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):

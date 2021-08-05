@@ -14,7 +14,6 @@ from discord_slash.utils import manage_components
 from main import get_prefix
 
 
-
 class GiveawayTask(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -61,7 +60,7 @@ class GiveawayTask(commands.Cog):
                     result_embed.add_field(name="Winner:", value=f"<@{user}>", inline=True)
                 result_embed.set_footer(icon_url=self.bot.user.avatar_url, text="Giveaway Ended !")
                 result_embed.set_thumbnail(url=self.bot.user.avatar_url)
-                
+
                 await giveaway_message.edit(embed=result_embed, components=[])
 
                 with open("cogs/giveaways.json", "r") as file:
@@ -75,5 +74,7 @@ class GiveawayTask(commands.Cog):
 
                 with open("cogs/giveaways.json", "w") as file:
                     json.dump(json_data, file, indent=4)
+
+
 def setup(bot):
     bot.add_cog(GiveawayTask(bot))
