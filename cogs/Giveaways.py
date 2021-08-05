@@ -168,6 +168,7 @@ class Giveaways(commands.Cog):
 
     @commands.Cog.listener()
     async def on_component(self, ctx: ComponentContext):
+        giveaway_users = []
         try:
             with open(f"giveaway_users/{ctx.custom_id}.txt", "r") as file:
                 for line in file:
