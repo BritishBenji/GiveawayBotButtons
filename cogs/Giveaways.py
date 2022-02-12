@@ -45,7 +45,6 @@ class Giveaways(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.config = json.load(open('./config.json', 'r'))
         self.color = discord.Colour.blurple()
 
     bot = commands.Bot(command_prefix=get_prefix, description="A bot made to describe the events in your server",
