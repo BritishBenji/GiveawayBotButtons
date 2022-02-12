@@ -1,9 +1,9 @@
 import asyncio
 import datetime
-import json
 import os
 import time
 import random
+import json
 
 import discord
 import discord_slash
@@ -17,7 +17,6 @@ from main import get_prefix
 class GiveawayTask(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.config = json.load(open("config.json", "r"))
         self.color = discord.Colour.blurple()
         self.giveaway_task.start()
 
